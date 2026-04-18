@@ -1,17 +1,14 @@
 <?php
 /**
- * RSD College Ferozpur - Database Configuration
+ * RSD College Ferozpur - SQLite Database Configuration
  */
-$host = "localhost";
-$db_name = "rsd_college_db";
-$username = "root";
-$password = ""; // Default XAMPP password is empty
+$databasePath = __DIR__ . '/rsd_college_new.db';
 
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
-    // Set the PDO error mode to exception
+    $conn = new PDO("sqlite:$databasePath");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
+    $conn->exec('PRAGMA foreign_keys = ON;');
+} catch (PDOException $e) {
     die(json_encode(["status" => "error", "message" => "Connection failed: " . $e->getMessage()]));
 }
 ?>

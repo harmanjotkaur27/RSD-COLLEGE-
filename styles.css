@@ -294,6 +294,55 @@ section {
     background-color: var(--primary-blue);
 }
 
+/* Tab Buttons */
+.btn-tab {
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: var(--dark-gray);
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.btn-tab:hover {
+    color: var(--secondary-blue);
+    border-bottom-color: var(--secondary-blue);
+}
+
+.btn-tab.active {
+    color: var(--secondary-blue);
+    border-bottom-color: var(--secondary-blue);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    background-color: #999999;
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background-color: #777777;
+}
+
+/* Action Buttons Container */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 /* Dashboard */
 .dashboard {
     display: none;
@@ -525,6 +574,14 @@ footer {
     font-size: 0.9rem;
     opacity: 0.8;
     margin-bottom: 0.8rem;
+}
+
+.footer-col .nav-link {
+    color: var(--white);
+}
+
+.footer-col .nav-link:hover {
+    color: var(--accent-blue);
 }
 
 .footer-bottom {

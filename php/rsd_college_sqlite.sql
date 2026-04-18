@@ -1,58 +1,47 @@
--- RSD College Ferozpur - Database Schema
--- Database: rsd_college_db
--- This script creates the necessary tables for the college management system.
+-- SQLite schema for RSD College Ferozpur
+BEGIN TRANSACTION;
 
-CREATE DATABASE IF NOT EXISTS rsd_college_db;
-USE rsd_college_db;
-
--- 1. Users Table (for Authentication)
 CREATE TABLE IF NOT EXISTS users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('student', 'teacher', 'admin') NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_VALUE
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL,
+    full_name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Courses Table
 CREATE TABLE IF NOT EXISTS courses (
-    course_id INT AUTO_INCREMENT PRIMARY KEY,
-    course_name VARCHAR(100) NOT NULL,
-    course_code VARCHAR(20) UNIQUE NOT NULL,
+    course_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_name TEXT NOT NULL,
+    course_code TEXT UNIQUE NOT NULL,
     description TEXT,
-    duration VARCHAR(50)
+    duration TEXT
 );
 
--- 3. Students Table
 CREATE TABLE IF NOT EXISTS students (
-    student_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    roll_no VARCHAR(20) UNIQUE NOT NULL,
-    course_id INT,
-    semester INT,
-    section VARCHAR(10),
+    student_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    roll_no TEXT UNIQUE NOT NULL,
+    course_id INTEGER,
+    semester INTEGER,
+    section TEXT,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );
 
--- 4. Attendance Table
 CREATE TABLE IF NOT EXISTS attendance (
-    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    course_id INT,
-    date DATE NOT NULL,
-    status ENUM('Present', 'Absent') NOT NULL,
-    marked_by INT, -- Teacher's user_id
+    attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id INTEGER,
+    course_id INTEGER,
+    date TEXT NOT NULL,
+    status TEXT NOT NULL,
+    marked_by INTEGER,
     FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES courses(course_id),
     FOREIGN KEY (marked_by) REFERENCES users(user_id)
 );
 
--- Sample Data Insertion
-
--- Insert Courses
 INSERT INTO courses (course_name, course_code, description, duration) VALUES
 ('Bachelor of Computer Applications', 'BCA', 'Undergraduate course in computer applications.', '3 Years'),
 ('Bachelor of Commerce', 'BCom', 'Undergraduate course in commerce and finance.', '3 Years'),
@@ -62,8 +51,6 @@ INSERT INTO courses (course_name, course_code, description, duration) VALUES
 ('Master of Arts', 'MA', 'Postgraduate course in arts.', '2 Years'),
 ('Master of Commerce', 'MCom', 'Postgraduate course in commerce.', '2 Years');
 
--- Insert Users (Teachers and Students)
--- Passwords should be hashed in a real application
 INSERT INTO users (username, password, role, full_name, email) VALUES
 ('teacher123', 'pass123', 'teacher', 'Prof. Rajesh Kumar', 'rajesh@rsdcollege.com'),
 ('student123', 'pass123', 'student', 'Amit Sharma', 'amit@gmail.com'),
@@ -86,7 +73,6 @@ INSERT INTO users (username, password, role, full_name, email) VALUES
 ('student140', 'pass123', 'student', 'Karan Singh', 'karan@gmail.com'),
 ('student141', 'pass123', 'student', 'Pooja Devi', 'pooja@gmail.com');
 
--- Insert Students mapping
 INSERT INTO students (user_id, roll_no, course_id, semester, section) VALUES
 (2, 'RSD-2023-001', 1, 1, 'A'),
 (3, 'RSD-2023-002', 1, 1, 'A'),
@@ -109,15 +95,4 @@ INSERT INTO students (user_id, roll_no, course_id, semester, section) VALUES
 (20, 'RSD-2023-019', 4, 1, 'D'),
 (21, 'RSD-2023-020', 4, 1, 'D');
 
--- Sample Attendance Data
-INSERT INTO attendance (student_id, course_id, date, status, marked_by) VALUES
-(1, 1, '2023-10-01', 'Present', 1),
-(2, 1, '2023-10-01', 'Present', 1),
-(3, 1, '2023-10-01', 'Absent', 1),
-(4, 1, '2023-10-01', 'Present', 1),
-(5, 1, '2023-10-01', 'Present', 1);
-
--- Comments:
--- 1. Import this file into your MySQL server using: SOURCE rsd_college_db.sql;
--- 2. Ensure the 'users' table is populated before 'students' and 'attendance'.
--- 3. The 'marked_by' field in 'attendance' refers to the teacher's user_id.
+COMMIT;
