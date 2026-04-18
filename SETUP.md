@@ -146,16 +146,24 @@ Development Server is running on http://localhost:8000
 
 ### Terminal 2: Start Java Report Service
 
+**Option A: Manual Setup**
 ```bash
 cd java-report-service
 javac AttendanceReportService.java
 java AttendanceReportService
 ```
 
+**Option B: Using npm script (Recommended)**
+```bash
+npm run java-service
+```
+
 You should see:
 ```
 Java Report Service is running on http://localhost:8081
 ```
+
+> **Note**: The Java service compiles `.class` files from the source code. These compiled files are **not committed** to git (they're in `.gitignore`) and are regenerated each time you start the service.
 
 ### Terminal 3: (Optional) Start Vite Dev Server
 

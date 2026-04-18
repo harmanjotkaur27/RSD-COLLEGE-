@@ -7,7 +7,8 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "echo 'No linting needed for static HTML'"
+    "lint": "echo 'No linting needed for static HTML'",
+    "java-service": "cd java-report-service && javac AttendanceReportService.java && java AttendanceReportService"
   },
   "dependencies": {
     "vite": "^6.2.0"

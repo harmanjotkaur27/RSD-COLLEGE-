@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 package-lock.json
+*.class
+*.db
+*.sqlite
+*.sqlite3
